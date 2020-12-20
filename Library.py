@@ -5,16 +5,17 @@ sql_cursor=sql_connector.cursor()
 while True:
 	id=str(input("Enter your Username: "))
 	pwd=str(input("Enter your Password: "))
-	if id.lower()=="admin" and pwd.lower()=="admin":
+	if id=="admin" and pwd=="admin":
 		try:
 			sql_cursor.execute("CREATE DATABASE Library")
 			sql_cursor.execute("USE Library")
-			sql_cursor.execute("CREATE TABLE Lended (Book_ID INT, Account_ID INT, Date_Borrowed CHAR(10), Date_Return CHAR(10))")
+			sql_cursor.execute('CREATE TABLE Lended (Book_ID INT, '
+				'Account_ID INT, Date_Borrowed CHAR(10), Date_Return CHAR(10))')
 			sql_cursor.execute("CREATE TABLE Accounts (Account_ID INT, Account_Name CHAR(20), Phone BIGINT)")
 			sql_cursor.execute("CREATE TABLE Catalog (Book_ID INT, Book_Name CHAR(50), Author_Name CHAR(20), Qty INT)")
 			sql=("INSERT INTO Accounts VALUES (%s,%s,%s)")
 			val=[(100,"Ritu Bari",8798282309),
-			(101,"Vishakha Kumar",8964382373),
+			(101,"Vishakha Chauhan",8964382373),
 			(102,"Shivansh Goel",9872546824),
 			(103,"Mayank Chaurasia",9628423512),
 			(104,"Kanishka Jain",9234548994)]
@@ -111,7 +112,8 @@ while True:
 						sql_cursor.executemany(sql, val)
 						sql_connector.commit()
 
-						print(("New Book has been added to the Catalog with Book ID: "+str(bid)).center(130))
+						print(("New Book has been added to the Catalog with Book ID: "+\
+							str(bid)).center(130))
 						print("")
 						break
 					elif confirm.lower()=="n":
@@ -140,7 +142,9 @@ while True:
 								while True:
 									menu4=int(input("Quantity to be Deleted: "))
 									if menu4<=record[0][3]:
-										sql_cursor.execute("UPDATE Catalog SET Qty="+str(record[0][3]-menu4)+" WHERE Book_ID="+str(menu3))
+										sql_cursor.execute("UPDATE Catalog SET Qty="+\
+											str(record[0][3]-menu4)+\
+											" WHERE Book_ID="+str(menu3))
 										sql_connector.commit()
 										print("Catalog Updated".center(130))
 										break
@@ -167,12 +171,17 @@ while True:
 								while True:
 									menu4=int(input("Quantity to be Deleted: "))
 									if menu4<=record[0][3]:
-										sql_cursor.execute("UPDATE Catalog SET Qty="+str(record[0][3]-menu4)+" WHERE Book_Name LIKE '%"+str(menu3)+"%'")
+										sql_cursor.execute("UPDATE Catalog SET Qty="+\
+											str(record[0][3]-menu4)+\
+											" WHERE Book_Name LIKE '%"+\
+											str(menu3)+"%'")
 										sql_connector.commit()
 										print("Catalog Updated".center(130))
 										break
 									else:
-										print(("Only "+str(record[0][3])+" Books are available").center(130))
+										print(("Only "+\
+											str(record[0][3])+\
+											" Books are available").center(130))
 								break
 							elif confirm.lower()=="n":
 								print("Request Canceled".center(130))
@@ -194,7 +203,9 @@ while True:
 								while True:
 									menu4=int(input("Quantity to be Deleted: "))
 									if menu4<=record[0][3]:
-										sql_cursor.execute("UPDATE Catalog SET Qty="+str(record[0][3]-menu4)+" WHERE Author_Name like '%"+str(menu3)+"%'")
+										sql_cursor.execute("UPDATE Catalog SET Qty="+\
+											str(record[0][3]-menu4)+\
+											" WHERE Author_Name like '%"+str(menu3)+"%'")
 										sql_connector.commit()
 										print("Catalog Updated".center(130))
 										break
